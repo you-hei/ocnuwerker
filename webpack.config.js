@@ -24,6 +24,9 @@ const config = {
   devServer: {
     contentBase: 'public',
     port: 8888,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    }
   }
 }
 

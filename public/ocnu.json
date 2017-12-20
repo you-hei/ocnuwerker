@@ -1,0 +1,22 @@
+{
+  "o": {
+    "name": "oooo",
+    "nagasa": 100,
+    "color": "#FF0000"
+  },
+  "c": {
+    "name": "cccc",
+    "nagasa": 80,
+    "color": "#00EE00"
+  },
+  "n": {
+    "name": "nnnn",
+    "nagasa": 60,
+    "color": "#0000CC"
+  },
+  "u": {
+    "name": "uuuu",
+    "nagasa": 40,
+    "color": "#A55A32"
+  }
+}
