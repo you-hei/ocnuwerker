@@ -20,6 +20,10 @@ const config = {
         }]
       }
     ]
+  },
+  devServer: {
+    contentBase: 'public',
+    port: 8888,
   }
 }
 
