@@ -1,4 +1,9 @@
-const CACHE_VERSION= 'v1.0.0'
+const CACHE_VERSION = 'v1.0.0'
+
+const INTERCEPT_FETCHS = [
+  'http://localhost:8888/',
+  'http://localhost:8888/bundle.js'
+]
 
 self.addEventListener('install', (event) => {
   console.log('installed!')
@@ -11,14 +16,19 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('fetch', (event) => {
   console.log('fetch', event)
-  if (event.request.url === 'http://localhost:8888/') {
-    event.respondWith(caches.match(event.request, { cacheName: CACHE_VERSION})
+  if (INTERCEPT_FETCHS.includes(event.request.url)) {
+    event.respondWith(caches.match(event.request, { cacheName: CACHE_VERSION })
       .then((response) => {
         if (response) {
           return response
         }
-        // なければ普通にfetchして返す
+
         return fetch(event.request)
+          .then(response => caches.open(CACHE_VERSION)
+            .then((cache) => {
+              cache.put(event.request, response.clone())
+              return response
+            }))
       }))
   }
   // if (event.request.url === 'http://localhost:8888/ocnu.json') {
