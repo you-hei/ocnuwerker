@@ -45,6 +45,7 @@ class App extends Component {
           {visualize(n)}
           {visualize(u)}
         </div>
+        <i className="material-icons">face</i>
       </div>
     )
   }
