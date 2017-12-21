@@ -21,6 +21,6 @@ self.addEventListener('fetch', (event) => {
       const response = new Response(blob, { 'status': 200, 'statusText': 'yesyesyes!' })
       // 返す
       resolve(response)
+    }))
   }
-
 })
