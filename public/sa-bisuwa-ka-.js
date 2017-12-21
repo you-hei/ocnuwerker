@@ -4,5 +4,9 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('fetch', (event) => {
   console.log('fetch', event)
-  event.respondWith(fetch(event.request))
+  if (event.request.url === 'http://localhost:8888/ocnu.json') {
+    console.log('ocnuを取ろうとしてるぞ！')
+    event.respondWith(fetch(event.request))
+  }
+
 })
