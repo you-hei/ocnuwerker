@@ -16,21 +16,19 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('fetch', (event) => {
   console.log('fetch', event)
-  if (INTERCEPT_FETCHS.includes(event.request.url)) {
-    event.respondWith(caches.match(event.request, { cacheName: CACHE_VERSION })
-      .then((response) => {
-        if (response) {
-          return response
-        }
+  event.respondWith(caches.match(event.request, { cacheName: CACHE_VERSION })
+    .then((response) => {
+      if (response) {
+        return response
+      }
 
-        return fetch(event.request)
-          .then(response => caches.open(CACHE_VERSION)
-            .then((cache) => {
-              cache.put(event.request, response.clone())
-              return response
-            }))
-      }))
-  }
+      return fetch(event.request)
+        .then(response => caches.open(CACHE_VERSION)
+          .then((cache) => {
+            cache.put(event.request, response.clone())
+            return response
+          }))
+    }))
   // if (event.request.url === 'http://localhost:8888/ocnu.json') {
   //   console.log('ocnuを取ろうとしてるぞ！')
   //   event.respondWith(new Promise((resolve) => {
