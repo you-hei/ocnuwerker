@@ -7,6 +7,7 @@ class App extends Component {
 
     this.pushチェック = this.pushチェック.bind(this)
     this.subscribeする = this.subscribeする.bind(this)
+    this.unsubscribeする = this.unsubscribeする.bind(this)
 
     this.state = {
       subscription: ''
@@ -41,14 +42,35 @@ class App extends Component {
     this.pushチェック()
       .then((swr: ServiceWorkerRegistration) => {
         console.log('subsribeする', swr)
-        swr.pushManager.subscribe({
+        return swr.pushManager.subscribe({
           userVisibleOnly: true,
           applicationServerKey
         })
-          .then((subscription: PushSubscription) => {
-            console.log('subscribe then', subscription)
-            this.setState({ subscription })
-          })
+      })
+      .then((subscription: PushSubscription) => {
+        console.log('subscribe then', subscription)
+        this.setState({ subscription })
+      })
+      .catch(console.error)
+  }
+
+  unsubscribeする() {
+    this.pushチェック()
+      .then((swr: ServiceWorkerRegistration) => {
+        console.log('subscriptionを取得する')
+        return swr.pushManager.getSubscription()
+      })
+      .then((subscription: PushSubscription) => {
+        if (subscription) {
+          // subscriptionが取れた時だけunsubscribeしたろ
+          return subscription.unsubscribe()
+        } else {
+          // subscription取れんやん
+          return Promise.reject('unsubscribeできなかった！！！！subscribeされてないのでunsubscribeできないのは自明の理')
+        }
+      })
+      .then((isSuccess) => {
+        console.log('unsubscribeできた？ isSuccess:', isSuccess)
       })
       .catch(console.error)
   }
@@ -60,6 +82,7 @@ class App extends Component {
         <div>
           <input type="button" value="pushが使えるかチェックしてみよう" onClick={this.pushチェック} />
           <input type="button" value="subscribeしないか" onClick={this.subscribeする} />
+          <input type="button" value="unsubscribeしないか" onClick={this.unsubscribeする} />
         </div>
         <div>
           <h3>this is subscription</h3>
