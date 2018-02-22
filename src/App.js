@@ -8,6 +8,9 @@ class App extends Component {
     this.pushチェック = this.pushチェック.bind(this)
     this.subscribeする = this.subscribeする.bind(this)
 
+    this.state = {
+      subscription: ''
+    }
   }
 
   // チェックで階層深くなりがちなのでプロミスにしたのを気づくといい
@@ -42,8 +45,9 @@ class App extends Component {
           userVisibleOnly: true,
           applicationServerKey
         })
-          .then((subs: PushSubscription) => {
-            console.log('subscribe then', subs)
+          .then((subscription: PushSubscription) => {
+            console.log('subscribe then', subscription)
+            this.setState({ subscription })
           })
       })
       .catch(console.error)
@@ -56,6 +60,10 @@ class App extends Component {
         <div>
           <input type="button" value="pushが使えるかチェックしてみよう" onClick={this.pushチェック} />
           <input type="button" value="subscribeしないか" onClick={this.subscribeする} />
+        </div>
+        <div>
+          <h3>this is subscription</h3>
+          <p>{JSON.stringify(this.state.subscription)}</p>
         </div>
       </div>
     )
