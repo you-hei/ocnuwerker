@@ -41,14 +41,14 @@ class App extends Component {
     this.pushチェック()
       .then((swr: ServiceWorkerRegistration) => {
         console.log('subsribeする', swr)
-        swr.pushManager.subscribe({
+        return swr.pushManager.subscribe({
           userVisibleOnly: true,
           applicationServerKey
         })
-          .then((subscription: PushSubscription) => {
-            console.log('subscribe then', subscription)
-            this.setState({ subscription })
-          })
+      })
+      .then((subscription: PushSubscription) => {
+        console.log('subscribe then', subscription)
+        this.setState({ subscription })
       })
       .catch(console.error)
   }
