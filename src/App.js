@@ -36,7 +36,7 @@ class App extends Component {
   }
 
   subscribeする() {
-    const applicationServerPublicKey: string = 'BMtXtiyh0tiqMEF1rpaBwqgr-Fe304WW-aISuu1OAZ8P8peTA7LvAvJwVyT_xTDVK6aM5qe63oAIlabfY-gpKKY'
+    const applicationServerPublicKey: string = 'キーを差し込む'
     const applicationServerKey: Uint8Array = KeyHenkan(applicationServerPublicKey)
     this.pushチェック()
       .then((swr: ServiceWorkerRegistration) => {
